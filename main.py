@@ -2,14 +2,21 @@ import os
 import sys
 import time
 import argparse
-
+from pynput.keyboard import Key, Controller
+keyboard = Controller()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--restart", help="restart the browser if it exits. Use Cntr + C to exit.",
     action="store_true")
 parser.add_argument("-v", "--verbose", help="Enable verbose output",
     action="store_true")
+parser.add_argument("-d", "--delay", help="Set delay between switching tabs. Default is 10s.",)
 args = parser.parse_args()
+
+delay = 5
+if args.delay:
+    print(args.delay)
+    #delay = args.delay;
 
 def main():
 
@@ -37,13 +44,16 @@ def main():
         # parent
         while True:
             print("[parent] waiting")
-            time.sleep(1.5)
+            time.sleep(delay)
+            with keyboard.pressed(Key.ctrl_l):
+                keyboard.press(Key.tab)
+                keyboard.release(Key.tab)
     else:
         # child
         print("[child] running " + command)
         ret = os.system(command);
         #ret = os.execlp("chromium-browser", command) # Dit werkt niet?
-        print(ret)
+        print("Browser exited with code: " + str(ret))
         exit(ret)
 
 if __name__ == "__main__":
