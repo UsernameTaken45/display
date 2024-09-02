@@ -16,7 +16,8 @@ args = parser.parse_args()
 delay = 5
 if args.delay:
     print(args.delay)
-    #delay = args.delay;
+    delay = args.delay;
+    print(delay)
 
 def main():
 
@@ -43,16 +44,20 @@ def main():
     if pid:
         # parent
         while True:
-            print("[parent] waiting")
-            time.sleep(delay)
-            with keyboard.pressed(Key.ctrl_l):
-                keyboard.press(Key.tab)
-                keyboard.release(Key.tab)
+            try:
+                print("[parent] waiting")
+                time.sleep(delay)
+                with keyboard.pressed(Key.ctrl_l):
+                    keyboard.press(Key.tab)
+                    keyboard.release(Key.tab)
+            except KeyboardInterrupt:
+                os.system("kill " + str(pid))
+                exit(1)
+
     else:
         # child
         print("[child] running " + command)
         ret = os.system(command);
-        #ret = os.execlp("chromium-browser", command) # Dit werkt niet?
         print("Browser exited with code: " + str(ret))
         exit(ret)
 
