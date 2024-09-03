@@ -6,7 +6,7 @@ from pynput.keyboard import Key, Controller
 keyboard = Controller()
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--restart", help="restart the browser if it exits. Use Cntr + C to exit.",
+parser.add_argument("--restart", help="restart the browser if it exits. Use Cntrl + C to exit. Not functional",
     action="store_true")
 parser.add_argument("-v", "--verbose", help="Enable verbose output",
     action="store_true")
