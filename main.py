@@ -13,13 +13,13 @@ parser.add_argument("-v", "--verbose", help="Enable verbose output",
 parser.add_argument("-d", "--delay", help="Set delay between switching tabs. Default is 10s.",)
 args = parser.parse_args()
 
-delay = 5
-if args.delay:
-    print(args.delay)
-    delay = args.delay;
-    print(delay)
+
 
 def main():
+
+    delay = 5
+    if args.delay:
+        delay = args.delay
 
     # Maak lijst met urls om te laden
     file = open("sites", "r")
@@ -46,7 +46,7 @@ def main():
         while True:
             try:
                 print("[parent] waiting")
-                time.sleep(delay)
+                time.sleep(int(delay))
                 with keyboard.pressed(Key.ctrl_l):
                     keyboard.press(Key.tab)
                     keyboard.release(Key.tab)
@@ -57,7 +57,7 @@ def main():
     else:
         # child
         print("[child] running " + command)
-        ret = os.system(command);
+        ret = os.system(command)
         print("Browser exited with code: " + str(ret))
         exit(ret)
 
